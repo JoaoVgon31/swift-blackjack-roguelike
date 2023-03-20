@@ -12,7 +12,7 @@ gameTable.startNewGame()
 
 while true {
     gameTable.manageGame()
-    
+
     print("\n__________FIM DE JOGO__________")
     print("\nSelecione uma das opções:\n1.Iniciar novo jogo \n2.Encerrar programa")
     let selectedOption = readIntInClosedRange(range: 1...2)
