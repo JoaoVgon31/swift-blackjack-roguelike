@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		1EBCBD1A29C88FD900D2E740 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBCBD1929C88FD900D2E740 /* main.swift */; };
+		1EBCBD2129C8937B00D2E740 /* blackjack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBCBD2029C8937B00D2E740 /* blackjack.swift */; };
+		1EBCBD2329C896EE00D2E740 /* GameTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBCBD2229C896EE00D2E740 /* GameTable.swift */; };
+		1EBCBD2529C8980800D2E740 /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBCBD2429C8980800D2E740 /* Character.swift */; };
+		1EBCBD2729C8984400D2E740 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBCBD2629C8984400D2E740 /* Player.swift */; };
+		1EBCBD2929C898A300D2E740 /* Enemy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBCBD2829C898A300D2E740 /* Enemy.swift */; };
+		1EBCBD2B29C898C900D2E740 /* utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBCBD2A29C898C900D2E740 /* utils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +31,12 @@
 /* Begin PBXFileReference section */
 		1EBCBD1629C88FD900D2E740 /* Blackjack Rogue RPG */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Blackjack Rogue RPG"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EBCBD1929C88FD900D2E740 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		1EBCBD2029C8937B00D2E740 /* blackjack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = blackjack.swift; sourceTree = "<group>"; };
+		1EBCBD2229C896EE00D2E740 /* GameTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTable.swift; sourceTree = "<group>"; };
+		1EBCBD2429C8980800D2E740 /* Character.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
+		1EBCBD2629C8984400D2E740 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		1EBCBD2829C898A300D2E740 /* Enemy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enemy.swift; sourceTree = "<group>"; };
+		1EBCBD2A29C898C900D2E740 /* utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = utils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +70,12 @@
 			isa = PBXGroup;
 			children = (
 				1EBCBD1929C88FD900D2E740 /* main.swift */,
+				1EBCBD2A29C898C900D2E740 /* utils.swift */,
+				1EBCBD2029C8937B00D2E740 /* blackjack.swift */,
+				1EBCBD2229C896EE00D2E740 /* GameTable.swift */,
+				1EBCBD2429C8980800D2E740 /* Character.swift */,
+				1EBCBD2629C8984400D2E740 /* Player.swift */,
+				1EBCBD2829C898A300D2E740 /* Enemy.swift */,
 			);
 			path = "Blackjack Rogue RPG";
 			sourceTree = "<group>";
@@ -97,7 +115,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1EBCBD1129C88FD900D2E740 /* Build configuration list for PBXProject "Blackjack Rogue RPG" */;
+			buildConfigurationList = 1EBCBD1129C88FD900D2E740 /* Build configuration list for PBXProject "Blackjack_Rogue_RPG" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -120,7 +138,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1EBCBD2B29C898C900D2E740 /* utils.swift in Sources */,
+				1EBCBD2129C8937B00D2E740 /* blackjack.swift in Sources */,
 				1EBCBD1A29C88FD900D2E740 /* main.swift in Sources */,
+				1EBCBD2929C898A300D2E740 /* Enemy.swift in Sources */,
+				1EBCBD2329C896EE00D2E740 /* GameTable.swift in Sources */,
+				1EBCBD2729C8984400D2E740 /* Player.swift in Sources */,
+				1EBCBD2529C8980800D2E740 /* Character.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,7 +289,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1EBCBD1129C88FD900D2E740 /* Build configuration list for PBXProject "Blackjack Rogue RPG" */ = {
+		1EBCBD1129C88FD900D2E740 /* Build configuration list for PBXProject "Blackjack_Rogue_RPG" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1EBCBD1B29C88FD900D2E740 /* Debug */,
