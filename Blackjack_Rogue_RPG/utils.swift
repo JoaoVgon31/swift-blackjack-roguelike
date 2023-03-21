@@ -33,3 +33,12 @@ func readIntInClosedRange(range: ClosedRange<Int>) -> Int {
         }
     }
 }
+
+func pressEnterToContinue() {
+    print("\nPressione enter/return para continuar")
+    let _ = readLine()
+}
+
+func printAsTitle(_ message: String) {
+    print("\n_______________\(message.uppercased())_______________")
+}

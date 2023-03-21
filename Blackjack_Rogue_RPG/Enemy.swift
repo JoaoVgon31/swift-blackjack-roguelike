@@ -8,17 +8,22 @@
 import Foundation
 
 class Enemy: Character {
-    override func makePlay(gameCards cards: inout Array<String>) {
+    override func makePlay(battleCards cards: inout Array<String>) {
         if !stopped {
-            print("\n__________Vez de \(name)__________")
+            printAsTitle("Vez de \(name)")
             if (cardsTotal >= 17) {
                 print("\n\(name) parou")
+                printHandAndCardsTotal()
                 stopped = true
             } else {
                 print("\n\(name) pegou uma carta")
                 takeCard(from: &cards)
                 printHandAndCardsTotal()
             }
+        } else {
+            printAsTitle("\(name) parou")
+            printHandAndCardsTotal()
         }
+        pressEnterToContinue()
     }
 }

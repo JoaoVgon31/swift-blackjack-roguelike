@@ -8,9 +8,33 @@
 import Foundation
 
 class Map {
-    func generateMap(paths: Int = 3, floors: Int = 5) {
+    var content: Array<Array<String>> = []
+    
+    init(paths: Int, floors: Int) {
+        self.content = Map.generateMapContent(paths: paths, floors: floors)
+    }
+    
+    private static func generateMapContent(paths: Int, floors: Int) -> Array<Array<String>> {
+        var mapContent: Array<Array<String>> = []
+        
+        for floor in 0..<floors {
+            mapContent.append([])
+            for path in 0..<paths {
+                if floor == 0 {
+                    mapContent[floor].append("\(path + 1)")
+                }
+            }
+        }
+        
+        return mapContent
+    }
+    
+    func printMap() {
+        let floors = map.content.count
+        let paths = map.content[0].count
+        
         let superiorLimit = {
-            var buildingLimit = "_"
+            var buildingLimit = "           _"
             for _ in 1...paths {
                 buildingLimit += "___"
             }
@@ -18,7 +42,7 @@ class Map {
         }()
         
         let inferiorLimit = {
-            var buildingLimit = "|"
+            var buildingLimit = "           |"
             for _ in 1...paths {
                 buildingLimit += "___"
             }
@@ -26,7 +50,7 @@ class Map {
         }()
         
         let emptyFloor = {
-            var buildingFloor = "|"
+            var buildingFloor = "           |"
             for _ in 1...paths {
                 buildingFloor += "   "
             }
@@ -34,7 +58,7 @@ class Map {
         }()
         
         let floor = {
-            var buildingFloor = "|"
+            var buildingFloor = "           |"
             for _ in 1...paths {
                 buildingFloor += " # "
             }

@@ -8,15 +8,25 @@
 import Foundation
 
 class Player: Character {
-    func readName() {
+    override init() {
+        super.init()
+    }
+    
+    init(attributes: Attributes) {
+        print("\nInforme o nome da pessoa que irá jogar:")
+        super.init(name: Player.readName(), attributes: attributes)
+    }
+    
+    static func readName() -> String {
         if let input = readLine() {
-            name = input
+            return input
         }
+        return "Personagem"
     }
 
-    override func makePlay(gameCards cards: inout Array<String>) {
+    override func makePlay(battleCards cards: inout Array<String>) {
         if !stopped {
-            print("\n__________Vez de \(name)__________")
+            printAsTitle("Vez de \(name)")
             printHandAndCardsTotal()
             print("\nSelecione uma das opções:\n1.Pegar uma carta \n2.Parar")
             let selectedOption = readIntInClosedRange(range: 1...2)
@@ -27,6 +37,10 @@ class Player: Character {
             } else if selectedOption == 2 {
                 stopped = true
             }
+        } else {
+            printAsTitle("\(name) parou")
+            printHandAndCardsTotal()
         }
+        pressEnterToContinue()
     }
 }
