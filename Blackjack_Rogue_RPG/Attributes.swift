@@ -9,5 +9,6 @@ import Foundation
 
 struct Attributes {
     var health: Int
-    var damage: Int
+    var attackDamage: Int
+    var criticalMultiplier: Double
 }

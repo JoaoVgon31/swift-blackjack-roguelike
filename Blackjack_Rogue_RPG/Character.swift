@@ -16,7 +16,7 @@ class Character {
     
     init() {
         self.name = "Personagem"
-        self.attributes = Attributes(health: 30, damage: 4)
+        self.attributes = Attributes(health: 30, attackDamage: 4, criticalMultiplier: 1.1)
     }
     
     init(name: String, attributes: Attributes) {
@@ -29,8 +29,10 @@ class Character {
         print("Valor total cartas \(name): \(cardsTotal)")
     }
     
-    func printHealth() {
+    func printAttributes() {
         print("\(name) possui \(attributes.health) pontos de vida")
+        print("\(name) possui \(attributes.attackDamage) pontos de ataque")
+        print("\(name) possui \(attributes.criticalMultiplier) multiplicador de dano crítico")
     }
     
     func takeCard(from cards: inout Array<String>) {

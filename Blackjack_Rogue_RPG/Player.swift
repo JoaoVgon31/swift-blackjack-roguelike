@@ -8,11 +8,15 @@
 import Foundation
 
 class Player: Character {
+    var money: Int
+    
     override init() {
+        self.money = 0
         super.init()
     }
     
-    init(attributes: Attributes) {
+    init(attributes: Attributes, money: Int) {
+        self.money = money
         print("\nInforme o nome da pessoa que irá jogar:")
         super.init(name: Player.readName(), attributes: attributes)
     }

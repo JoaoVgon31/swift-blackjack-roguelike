@@ -23,7 +23,7 @@ class BattleTable {
         }
     }
     
-    private func generateBattleCards(quantityOfDecks: Int = 2) {
+    private func generateBattleCards(quantityOfDecks: Int = 4) {
         battleCards = []
         for _ in 1...quantityOfDecks {
             for card in BattleTable.cards {
@@ -46,6 +46,7 @@ class BattleTable {
         if enemy.attributes.health <= 0 {
             printAsTitle("Fim de Jogo")
             print("\n\(player.name) ganhou o jogo com \(player.attributes.health) pontos de vida restantes")
+            print("\n\(player.name) recebe R$\(enemy.bounty) de recompensa. Dinheiro total: R$\(player.money)")
             print("\(enemy.name) perdeu o jogo")
             return true
         } else if player.attributes.health <= 0 {
@@ -62,29 +63,35 @@ class BattleTable {
             printAsTitle("Fim da Rodada")
             if player.cardsTotal > enemy.cardsTotal && player.cardsTotal <= 21 || enemy.cardsTotal > 21 {
                 print("\n\(player.name) ganhou a rodada")
-                var damage: Int = player.attributes.damage
+                var damage: Int = player.attributes.attackDamage
                 if (enemy.cardsTotal > 21) {
-                    damage += enemy.cardsTotal - 21
+                    damage += Int(Double(enemy.cardsTotal - 21) * 1.5)
                 } else {
                     damage += player.cardsTotal - enemy.cardsTotal
+                }
+                if player.cardsTotal == 21 {
+                    damage = Int(Double(damage) * player.attributes.criticalMultiplier)
                 }
                 print("\(enemy.name) perde \(damage) pontos de vida")
                 enemy.attributes.health -= damage
             } else if player.cardsTotal < enemy.cardsTotal && enemy.cardsTotal <= 21 || player.cardsTotal > 21 {
                 print("\n\(enemy.name) ganhou a rodada")
-                var damage: Int = enemy.attributes.damage
+                var damage: Int = enemy.attributes.attackDamage
                 if (player.cardsTotal > 21) {
-                    damage += player.cardsTotal - 21
+                    damage += Int(Double(player.cardsTotal - 21) * 1.5)
                 } else {
                     damage += enemy.cardsTotal - player.cardsTotal
+                }
+                if enemy.cardsTotal == 21 {
+                    damage = Int(Double(damage) * enemy.attributes.criticalMultiplier)
                 }
                 print("\(player.name) perde \(damage) pontos de vida")
                 player.attributes.health -= damage
             } else {
                 print("\nRodada empatou")
             }
-            player.printHealth()
-            enemy.printHealth()
+            player.printAttributes()
+            enemy.printAttributes()
             
             pressEnterToContinue()
             return true
@@ -96,9 +103,9 @@ class BattleTable {
         printAsTitle("Começando nova rodada")
         dealInitialHands(from: &battleCards, for: [player, enemy])
         player.printHandAndCardsTotal()
-        player.printHealth()
+        player.printAttributes()
         enemy.printHandAndCardsTotal()
-        enemy.printHealth()
+        enemy.printAttributes()
         pressEnterToContinue()
         manageRound()
     }
@@ -129,11 +136,15 @@ class BattleTable {
         }
     }
     
-    func startNewBattle() {
+    func startNewBattle(player: Player, enemy: Enemy) {
         generateBattleCards()
-        player = Player(attributes: Attributes(health: 30, damage: 4))
-        enemy = Enemy(name: "Inimigo", attributes: Attributes(health: 30, damage: 4))
+        self.player = player
+        self.enemy = enemy
         currentTurn = 0
+        printAsTitle("Começando a Batalha")
+        print("\nInimigo: \(enemy.name). Recompensa: R$\(enemy.bounty)")
+        enemy.printAttributes()
+        pressEnterToContinue()
         manageBattle()
     }
 }

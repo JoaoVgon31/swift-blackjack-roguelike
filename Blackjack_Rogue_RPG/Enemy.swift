@@ -8,6 +8,18 @@
 import Foundation
 
 class Enemy: Character {
+    var bounty: Int
+    
+    override init() {
+        self.bounty = 0
+        super.init()
+    }
+    
+    init(name: String, attributes: Attributes, bounty: Int) {
+        self.bounty = bounty
+        super.init(name: name, attributes: attributes)
+    }
+    
     override func makePlay(battleCards cards: inout Array<String>) {
         if !stopped {
             printAsTitle("Vez de \(name)")
