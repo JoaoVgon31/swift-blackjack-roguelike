@@ -13,15 +13,13 @@ enum InputError: Error {
 }
 
 func readInt() throws -> Int {
-    if let input = readLine() {
-        if let intInput = Int(input) {
-            return intInput
-        } else {
-            throw InputError.NAN
-        }
-    } else {
+    guard let input = readLine() else {
+        throw InputError.NAN
+    }
+    guard let intInput = Int(input) else {
         throw InputError.invalid
     }
+    return intInput
 }
 
 func readIntInClosedRange(range: ClosedRange<Int>) -> Int {

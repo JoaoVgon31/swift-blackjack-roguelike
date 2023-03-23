@@ -7,5 +7,5 @@
 
 import Foundation
 
-var gameController = GameController(paths: 3, floors: 10)
+var gameController = GameController(paths: 3, floors: 12)
 gameController.manageGame()

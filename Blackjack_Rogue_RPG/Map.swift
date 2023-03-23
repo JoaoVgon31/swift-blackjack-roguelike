@@ -8,13 +8,15 @@
 import Foundation
 
 class Map {
-    enum locations {
+    enum Locations {
         case Enemy
         case RestPlace
         case Merchant
         case RandomEvent
+        case Empty
     }
-    static let locationsSymbol = [locations.Enemy: "#", locations.RestPlace: "~", locations.Merchant: "$", locations.RandomEvent: "?"]
+    static let locationsSymbol = [Locations.Enemy: "#", Locations.RestPlace: "~", Locations.Merchant: "$", Locations.RandomEvent: "?"]
+    static let symbolsLocation = ["#": Locations.Enemy, "~": Locations.RestPlace, "$": Locations.Merchant, "?": Locations.RandomEvent]
     var content: Array<Array<String>> = []
     var lastPathTraveled: Int = -1
     var currentFloor: Int = -1
@@ -25,11 +27,32 @@ class Map {
     
     private static func generateMapContent(paths: Int, floors: Int) -> Array<Array<String>> {
         var mapContent: Array<Array<String>> = []
+        let restPlacesPosition = {() -> Array<Int> in
+            var positions: Array<Int> = []
+            var nextPositionMinFloor = 3
+            let maxPositions = floors / 2
+            for _ in 0..<maxPositions {
+                nextPositionMinFloor = Int.random(in: nextPositionMinFloor...(nextPositionMinFloor + 3))
+                positions.append(nextPositionMinFloor - 1)
+                nextPositionMinFloor += 3
+            }
+            return positions
+        }()
         
+        var restPlacesCount = 0
+        var restPlacePath = 0
         for floor in 0..<floors {
             mapContent.append([])
-            for _ in 0..<paths {
-                mapContent[floor].append("#")
+            if floor == restPlacesPosition[restPlacesCount] {
+                restPlacePath = Int.random(in: 0...2)
+            }
+            for path in 0..<paths {
+                if floor == restPlacesPosition[restPlacesCount] && path == restPlacePath {
+                    mapContent[floor].append(locationsSymbol[Locations.RestPlace]!)
+                    restPlacesCount += 1
+                } else {
+                    mapContent[floor].append("#")
+                }
             }
         }
         
@@ -67,10 +90,15 @@ class Map {
         return selectedOption
     }
     
-    func goToNextFloor() {
+    func goToNextFloor() -> Locations {
         updateMap()
         printMap()
-        let _ = readNextFloorPath()
+        let path = readNextFloorPath()
+        let pathSymbol = content[currentFloor][path - 1]
+        if let pathLocation = Map.symbolsLocation[pathSymbol] {
+            return pathLocation
+        }
+        return Locations.Empty
     }
     
     func printMap() {

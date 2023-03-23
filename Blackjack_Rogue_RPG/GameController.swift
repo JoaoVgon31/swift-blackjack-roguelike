@@ -36,9 +36,27 @@ class GameController {
         pressEnterToContinue()
         
         while map.currentFloor < 9 && player.attributes.health > 0 {
-            map.goToNextFloor()
+            let location = map.goToNextFloor()
             pressEnterToContinue()
-            battleTable.startNewBattle(player: player, enemy: generateEnemy(difficultyModifier: map.currentFloor))
+            
+            switch location {
+            case Map.Locations.Enemy:
+                battleTable.startNewBattle(player: player, enemy: generateEnemy(difficultyModifier: map.currentFloor))
+            case Map.Locations.RestPlace:
+                printAsTitle("Local de Descanso")
+                player.printAttributes()
+                print("\nSelecione uma das opções:\n1.Descansar (Recuperar 30% pontos de vida)2.Sair")
+                let selectedOption = readIntInClosedRange(range: 1...2)
+                if selectedOption == 1 {
+                    let recoveredHealth = Int(Double(player.attributes.maxHealth) * 0.3)
+                    player.attributes.health += recoveredHealth
+                    print("Você recuperou \(recoveredHealth). Vida atual: \(player.attributes.health)")
+                } else if selectedOption == 2 {
+                    continue
+                }
+            default:
+                continue
+            }
         }
         
         map.updateMap()
