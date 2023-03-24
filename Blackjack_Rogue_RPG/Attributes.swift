@@ -8,10 +8,12 @@
 import Foundation
 
 class Attributes {
-    private var _health: Int = 1
-    private var _maxHealth: Int = 1
-    private var _attackDamage: Int = 1
-    private var _criticalMultiplier: Double = 1.0
+    private var _health: Int = 0
+    private var _maxHealth: Int = 0
+    private var _chips: Int = 0
+    private var _maxChips: Int = 0
+    private var _attackDamage: Int = 0
+    private var _criticalMultiplier: Double = 0.0
     var health: Int {
         get { _health }
         set {
@@ -26,6 +28,20 @@ class Attributes {
         get { _maxHealth }
         set { _maxHealth = newValue }
     }
+    var chips: Int {
+        get { _chips }
+        set {
+            if newValue >= _maxChips {
+                _chips = _maxChips
+            } else {
+                _chips = newValue
+            }
+        }
+    }
+    var maxChips: Int {
+        get { _maxChips }
+        set { _maxChips = newValue }
+    }
     var attackDamage: Int {
         get { _attackDamage }
         set { _attackDamage = newValue }
@@ -36,15 +52,19 @@ class Attributes {
     }
     
     init() {
-        self.health = 30
-        self.maxHealth = 30
-        self.attackDamage = 4
-        self.criticalMultiplier = 1.1
+        self.health = 0
+        self.maxHealth = 0
+        self.chips = 0
+        self.maxChips = 0
+        self.attackDamage = 0
+        self.criticalMultiplier = 0.0
     }
     
-    init(maxHealth: Int, attackDamage: Int, criticalMultiplier: Double) {
+    init(maxHealth: Int, maxChips: Int, attackDamage: Int, criticalMultiplier: Double) {
         self.maxHealth = maxHealth
         self.health = maxHealth
+        self.maxChips = maxChips
+        self.chips = maxChips
         self.attackDamage = attackDamage
         self.criticalMultiplier = criticalMultiplier
     }

@@ -23,8 +23,8 @@ class Enemy: Character {
         self.bounty = 0
     }
     
-    init(name: String, attributes: Attributes, bounty: Int) {
-        super.init(name: name, attributes: attributes)
+    init(name: String, attributes: Attributes, bounty: Int, effectCards: Array<EffectCard>) {
+        super.init(name: name, attributes: attributes, effectCards: effectCards)
         self.bounty = bounty
     }
     

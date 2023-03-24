@@ -49,3 +49,12 @@ func printOptions(withTitle title: String = "Selecione uma das opções", _ opti
         optionNumber += 1
     }
 }
+
+func printOptions(withTitle title: String = "Selecione uma das opções", _ options: Array<String>) {
+    print("\n\(title):")
+    var optionNumber = 1
+    for option in options {
+        print("\(optionNumber).\(option)")
+        optionNumber += 1
+    }
+}

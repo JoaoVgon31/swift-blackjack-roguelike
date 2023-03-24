@@ -25,11 +25,7 @@ class Map {
     }
     var currentFloor: Int {
         get { _currentFloor }
-        set {
-            if newValue < content.count {
-                _currentFloor = newValue
-            }
-        }
+        set { _currentFloor = newValue }
     }
     
     init() {

@@ -19,17 +19,27 @@ class GameController {
         set { _map = newValue }
     }
     
-    init(mapPaths: Int, mapFloors: Int, playerAttributes: Attributes, playerMoney: Int) {
-        self.player = Player(attributes: playerAttributes, money: playerMoney)
+    init(mapPaths: Int, mapFloors: Int, playerAttributes: Attributes, playerMoney: Int, playerEffectCards: Array<EffectCard>) {
+        self.player = Player(attributes: playerAttributes, money: playerMoney, effectCards: playerEffectCards)
         self.map = Map(paths: mapPaths, floors: mapFloors)
     }
     
     static func generateEnemy(difficultyModifier: Int) -> Enemy {
         let maxHealth = 10 + difficultyModifier * Int.random(in: 1...8)
+        let maxChips = 20 + difficultyModifier * Int.random(in: 1...8)
         let attackDamage = 1 + difficultyModifier * Int.random(in: 0...1)
         let criticalMultiplier = 1.0 + Double(difficultyModifier * Int.random(in: 1...3)) / 10.0
         let bounty = 5 + difficultyModifier * Int.random(in: 5...10)
-        return Enemy(name: "Inimigo", attributes: Attributes(maxHealth: maxHealth, attackDamage: attackDamage, criticalMultiplier: criticalMultiplier), bounty: bounty)
+        
+        let enemyEffectCards: Array<EffectCard> = {
+            var effectCards: Array<EffectCard> = []
+            for _ in 1...15 {
+                effectCards.append(attackGamble)
+            }
+            return effectCards
+        }()
+        
+        return Enemy(name: "Inimigo", attributes: Attributes(maxHealth: maxHealth, maxChips: maxChips, attackDamage: attackDamage, criticalMultiplier: criticalMultiplier), bounty: bounty, effectCards: enemyEffectCards)
     }
     
     func manageGame() {
@@ -41,7 +51,7 @@ class GameController {
               """)
         pressEnterToContinue()
         
-        while map.currentFloor < map.content.count && player.attributes.health > 0 {
+        while map.currentFloor < map.content.count - 1 && (player.attributes.health > 0 || player.attributes.maxHealth == 0) {
             let location = map.goToNextFloor()
             location.playerWillEnter(player: player)
             location.playerDidEnter(player: player)
