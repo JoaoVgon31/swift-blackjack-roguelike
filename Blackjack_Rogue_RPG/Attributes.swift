@@ -13,6 +13,13 @@ struct Attributes {
     var attackDamage: Int
     var criticalMultiplier: Double
     
+    init() {
+        self.health = 30
+        self.maxHealth = 30
+        self.attackDamage = 4
+        self.criticalMultiplier = 1.1
+    }
+    
     init(health: Int, attackDamage: Int, criticalMultiplier: Double) {
         self.health = health
         self.maxHealth = health

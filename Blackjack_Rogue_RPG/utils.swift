@@ -40,3 +40,12 @@ func pressEnterToContinue() {
 func printAsTitle(_ message: String) {
     print("\n_______________\(message.uppercased())_______________")
 }
+
+func printOptions(withTitle title: String = "Selecione uma das opções", _ options: String...) {
+    print("\n\(title):")
+    var optionNumber = 1
+    for option in options {
+        print("\(optionNumber).\(option)")
+        optionNumber += 1
+    }
+}

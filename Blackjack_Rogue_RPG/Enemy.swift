@@ -8,16 +8,24 @@
 import Foundation
 
 class Enemy: Character {
-    var bounty: Int
+    private var _bounty: Int = 0
+    var bounty: Int {
+        get { _bounty }
+        set {
+            if newValue >= 5 {
+                _bounty = newValue
+            }
+        }
+    }
     
     override init() {
-        self.bounty = 0
         super.init()
+        self.bounty = 0
     }
     
     init(name: String, attributes: Attributes, bounty: Int) {
-        self.bounty = bounty
         super.init(name: name, attributes: attributes)
+        self.bounty = bounty
     }
     
     override func makePlay(battleCards cards: inout Array<String>) {

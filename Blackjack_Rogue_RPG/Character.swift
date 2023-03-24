@@ -8,15 +8,39 @@
 import Foundation
 
 class Character {
-    var name: String
-    var hand: Array<String> = []
-    var cardsTotal: Int = 0
-    var stopped: Bool = false
-    var attributes: Attributes
+    private var _name: String = ""
+    private var _hand: Array<String> = []
+    private var _cardsTotal: Int = 0
+    private var _stopped: Bool = false
+    private var _attributes: Attributes = Attributes()
+    var name: String {
+        get { _name }
+        set {
+            if !newValue.isEmpty {
+                _name = newValue
+            }
+        }
+    }
+    var hand: Array<String> {
+        get { _hand }
+        set { _hand = newValue }
+    }
+    var cardsTotal: Int {
+        get { _cardsTotal }
+        set { _cardsTotal = newValue }
+    }
+    var stopped: Bool {
+        get { _stopped }
+        set { _stopped = newValue }
+    }
+    var attributes: Attributes {
+        get { _attributes }
+        set { _attributes = newValue }
+    }
     
     init() {
         self.name = "Personagem"
-        self.attributes = Attributes(health: 30, attackDamage: 4, criticalMultiplier: 1.1)
+        self.attributes = Attributes()
     }
     
     init(name: String, attributes: Attributes) {

@@ -16,6 +16,7 @@
 		1EBCBD2D29C8A83E00D2E740 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBCBD2C29C8A83E00D2E740 /* Map.swift */; };
 		1EBCBD3129C9D77F00D2E740 /* Attributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBCBD3029C9D77F00D2E740 /* Attributes.swift */; };
 		1EBCBD3329CB20C500D2E740 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBCBD3229CB20C500D2E740 /* GameController.swift */; };
+		1EBCBD3729CCAE2400D2E740 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBCBD3629CCAE2400D2E740 /* Location.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -41,6 +42,7 @@
 		1EBCBD2C29C8A83E00D2E740 /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		1EBCBD3029C9D77F00D2E740 /* Attributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Attributes.swift; sourceTree = "<group>"; };
 		1EBCBD3229CB20C500D2E740 /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
+		1EBCBD3629CCAE2400D2E740 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 				1EBCBD3229CB20C500D2E740 /* GameController.swift */,
 				1EBCBD2229C896EE00D2E740 /* BattleTable.swift */,
 				1EBCBD2C29C8A83E00D2E740 /* Map.swift */,
+				1EBCBD3629CCAE2400D2E740 /* Location.swift */,
 				1EBCBD2429C8980800D2E740 /* Character.swift */,
 				1EBCBD3029C9D77F00D2E740 /* Attributes.swift */,
 				1EBCBD2629C8984400D2E740 /* Player.swift */,
@@ -146,6 +149,7 @@
 			files = (
 				1EBCBD2B29C898C900D2E740 /* utils.swift in Sources */,
 				1EBCBD2D29C8A83E00D2E740 /* Map.swift in Sources */,
+				1EBCBD3729CCAE2400D2E740 /* Location.swift in Sources */,
 				1EBCBD1A29C88FD900D2E740 /* main.swift in Sources */,
 				1EBCBD2929C898A300D2E740 /* Enemy.swift in Sources */,
 				1EBCBD3329CB20C500D2E740 /* GameController.swift in Sources */,

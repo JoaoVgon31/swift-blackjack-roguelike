@@ -8,11 +8,31 @@
 import Foundation
 
 class BattleTable {
-    static let cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Q", "J", "K"]
-    var battleCards: Array<String> = []
-    var player: Player = Player()
-    var enemy: Enemy = Enemy()
-    var currentTurn: Int = 0
+    public static let cards = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Q", "J", "K"]
+    private var _battleCards: Array<String> = []
+    private var _player: Player = Player()
+    private var _enemy: Enemy = Enemy()
+    private var _currentTurn: Int = 0
+    var battleCards: Array<String> {
+        get { _battleCards }
+        set { _battleCards = newValue }
+    }
+    var player: Player {
+        get { _player }
+        set { _player = newValue }
+    }
+    var enemy: Enemy {
+        get { _enemy }
+        set { _enemy = newValue }
+    }
+    var currentTurn: Int {
+        get { _currentTurn }
+        set {
+            if newValue >= 0 {
+                _currentTurn = newValue
+            }
+        }
+    }
     
     static func getCardValue(card: String) -> Int {
         let position = cards.firstIndex(of: card) ?? -1
@@ -44,13 +64,13 @@ class BattleTable {
     
     private func battleEnded() -> Bool {
         if enemy.attributes.health <= 0 {
-            printAsTitle("Fim de Jogo")
+            printAsTitle("Fim de Batalha")
             print("\n\(player.name) ganhou o jogo com \(player.attributes.health) pontos de vida restantes")
             print("\n\(player.name) recebe R$\(enemy.bounty) de recompensa. Dinheiro total: R$\(player.money)")
             print("\(enemy.name) perdeu o jogo")
             return true
         } else if player.attributes.health <= 0 {
-            printAsTitle("Fim de Jogo")
+            printAsTitle("Fim de Batalha")
             print("\n\(enemy.name) ganhou o jogo com \(enemy.attributes.health) pontos de vida restantes")
             print("\(player.name) perdeu o jogo")
             return true
@@ -92,7 +112,6 @@ class BattleTable {
             }
             player.printAttributes()
             enemy.printAttributes()
-            
             pressEnterToContinue()
             return true
         }

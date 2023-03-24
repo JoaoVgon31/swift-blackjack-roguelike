@@ -8,18 +8,24 @@
 import Foundation
 
 class GameController {
-    var player: Player
-    var battleTable: BattleTable
-    var map: Map
-    
-    init(paths: Int, floors: Int) {
-        self.player = Player(attributes: Attributes(health: 30, attackDamage: 4, criticalMultiplier: 2.0), money: 20)
-        self.battleTable = BattleTable()
-        self.map = Map(paths: paths, floors: floors)
+    private var _player: Player = Player()
+    private var _map: Map = Map()
+    var player: Player {
+        get { _player }
+        set { _player = newValue }
+    }
+    var map: Map {
+        get { _map }
+        set { _map = newValue }
     }
     
-    private func generateEnemy(difficultyModifier: Int) -> Enemy {
-        let health = 20 + difficultyModifier * Int.random(in: 1...3)
+    init(mapPaths: Int, mapFloors: Int, playerAttributes: Attributes, playerMoney: Int) {
+        self.player = Player(attributes: playerAttributes, money: playerMoney)
+        self.map = Map(paths: mapPaths, floors: mapFloors)
+    }
+    
+    static func generateEnemy(difficultyModifier: Int) -> Enemy {
+        let health = 10 + difficultyModifier * Int.random(in: 1...8)
         let attackDamage = 1 + difficultyModifier * Int.random(in: 0...1)
         let criticalMultiplier = 1.0 + Double(difficultyModifier * Int.random(in: 1...3)) / 10.0
         let bounty = 5 + difficultyModifier * Int.random(in: 5...10)
@@ -35,32 +41,17 @@ class GameController {
               """)
         pressEnterToContinue()
         
-        while map.currentFloor < 9 && player.attributes.health > 0 {
+        while map.currentFloor < map.content.count && player.attributes.health > 0 {
             let location = map.goToNextFloor()
-            pressEnterToContinue()
-            
-            switch location {
-            case Map.Locations.Enemy:
-                battleTable.startNewBattle(player: player, enemy: generateEnemy(difficultyModifier: map.currentFloor))
-            case Map.Locations.RestPlace:
-                printAsTitle("Local de Descanso")
-                player.printAttributes()
-                print("\nSelecione uma das opções:\n1.Descansar (Recuperar 30% pontos de vida)2.Sair")
-                let selectedOption = readIntInClosedRange(range: 1...2)
-                if selectedOption == 1 {
-                    let recoveredHealth = Int(Double(player.attributes.maxHealth) * 0.3)
-                    player.attributes.health += recoveredHealth
-                    print("Você recuperou \(recoveredHealth). Vida atual: \(player.attributes.health)")
-                } else if selectedOption == 2 {
-                    continue
-                }
-            default:
-                continue
-            }
+            location.playerWillEnter(player: player)
+            location.playerDidEnter(player: player)
+            location.playerWillLeave(player: player)
         }
         
-        map.updateMap()
-        map.printMap()
+        if (player.attributes.health > 0) {
+            map.updateMap()
+            map.printMap()
+        }
         printAsTitle("Fim de Jogo")
     }
 }
