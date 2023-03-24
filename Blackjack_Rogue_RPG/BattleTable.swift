@@ -66,6 +66,7 @@ class BattleTable {
         if enemy.attributes.health <= 0 {
             printAsTitle("Fim de Batalha")
             print("\n\(player.name) ganhou o jogo com \(player.attributes.health) pontos de vida restantes")
+            player.money += enemy.bounty
             print("\n\(player.name) recebe R$\(enemy.bounty) de recompensa. Dinheiro total: R$\(player.money)")
             print("\(enemy.name) perdeu o jogo")
             return true

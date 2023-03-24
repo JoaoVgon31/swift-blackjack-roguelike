@@ -18,7 +18,7 @@ class Map {
     var lastChoosenPath: Int {
         get { _lastChoosenPath }
         set {
-            if newValue >= 0 && newValue <= 2 {
+            if newValue >= 1 && newValue <= 3 {
                 _lastChoosenPath = newValue
             }
         }
@@ -89,15 +89,9 @@ class Map {
     }
     
     func updateMap() {
-        let paths = content[0].count
-        
-        for path in 0..<paths {
-            if path == lastChoosenPath - 1 {
-                content[currentFloor][path] = Cleared()
-                break
-            }
+        if currentFloor >= 0 {
+            content[currentFloor][lastChoosenPath - 1] = Cleared()
         }
-        
         currentFloor += 1
     }
     

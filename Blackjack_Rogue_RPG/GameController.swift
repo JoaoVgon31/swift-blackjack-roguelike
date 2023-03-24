@@ -25,11 +25,11 @@ class GameController {
     }
     
     static func generateEnemy(difficultyModifier: Int) -> Enemy {
-        let health = 10 + difficultyModifier * Int.random(in: 1...8)
+        let maxHealth = 10 + difficultyModifier * Int.random(in: 1...8)
         let attackDamage = 1 + difficultyModifier * Int.random(in: 0...1)
         let criticalMultiplier = 1.0 + Double(difficultyModifier * Int.random(in: 1...3)) / 10.0
         let bounty = 5 + difficultyModifier * Int.random(in: 5...10)
-        return Enemy(name: "Inimigo", attributes: Attributes(health: health, attackDamage: attackDamage, criticalMultiplier: criticalMultiplier), bounty: bounty)
+        return Enemy(name: "Inimigo", attributes: Attributes(maxHealth: maxHealth, attackDamage: attackDamage, criticalMultiplier: criticalMultiplier), bounty: bounty)
     }
     
     func manageGame() {
