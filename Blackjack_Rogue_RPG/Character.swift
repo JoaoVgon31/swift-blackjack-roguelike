@@ -94,10 +94,18 @@ class Character {
     }
     
     func printAttributes() {
-        print("\(name) possui \(attributes.health) pontos de vida. Vida máxima: \(attributes.maxHealth)")
-        print("\(name) possui \(attributes.chips)k fichas. Fichas máximas: \(attributes.maxChips)k")
-        print("\(name) possui \(attributes.attackDamage) pontos de ataque")
-        print("\(name) possui \(attributes.criticalMultiplier) multiplicador de dano crítico")
+        let health = String(format: "%03d", attributes.health)
+        let maxHealth = String(format: "%03d", attributes.maxHealth)
+        let chips = String(format: "%03d", attributes.chips)
+        let maxChips = String(format: "%03d", attributes.maxChips)
+        let attackDamage = String(format: "%02d", attributes.attackDamage)
+        let criticalMultiplier = String(format: "%04.1f", attributes.criticalMultiplier)
+        print("\n\(name)")
+        print("________________________________________________________________________________")
+        print("| Vida Atual | Vida Máxima | Fichas Atuais | Fichas Máximas | Ataque | Critico |")
+        print("|____________|_____________|_______________|________________|________|_________|")
+        print("|     \(health)    |     \(maxHealth)     |      \(chips)      |      \(maxChips)       |   \(attackDamage)   |   \(criticalMultiplier)  |")
+        print("|____________|_____________|_______________|________________|________|_________|")
     }
     
     func countEffectCardsOnHandByName(_ name: String) -> Int {

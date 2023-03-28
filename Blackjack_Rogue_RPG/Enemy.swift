@@ -35,11 +35,6 @@ class Enemy: Character {
             let cardsTotalToOponentCardsTotal = oponentCardsTotal - cardsTotal
             let cardsTotalTo21 = 21 - cardsTotal
             printAsTitle("Vez de \(name)")
-            printEffectCards(onHand: true)
-            print(attackGambleOnHand)
-            print(temporaryArmorOnHand)
-            print(cardsTotalToOponentCardsTotal)
-            print(cardsTotalTo21)
             if (cardsTotal >= 17) {
                 if cardsTotalToOponentCardsTotal < 0 {
                     if cardsTotalTo21 <= 3 {

@@ -132,10 +132,10 @@ class BattleTable {
     private func startNewRound() {
         printAsTitle("Começando nova rodada")
         dealInitialHands(from: &battleCards, for: [player, enemy])
-        player.printHandAndCardsTotal()
         player.printAttributes()
-        enemy.printHandAndCardsTotal()
+        player.printHandAndCardsTotal()
         enemy.printAttributes()
+        enemy.printHandAndCardsTotal()
         pressEnterToContinue()
         manageRound()
     }
