@@ -30,7 +30,7 @@ extension Location {
 class EnemyEncounter: Location {
     static var battleTable: BattleTable = BattleTable()
     var symbol: String = "#"
-    var name: String = "Mesa"
+    var name: String = "Mesa de Batalha"
     var enemy: Enemy = Enemy()
     
     init(floor: Int) {

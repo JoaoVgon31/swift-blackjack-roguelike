@@ -28,10 +28,59 @@ class Enemy: Character {
         self.bounty = bounty
     }
     
-    override func makePlay(battleCards cards: inout Array<String>) {
+    override func makePlay(battleCards cards: inout Array<String>, oponentCardsTotal: Int) {
         if !stopped {
+            var attackGambleOnHand = countEffectCardsOnHandByName("Aposta de Ataque")
+            var temporaryArmorOnHand = countEffectCardsOnHandByName("Armadura Temporária")
+            let cardsTotalToOponentCardsTotal = oponentCardsTotal - cardsTotal
+            let cardsTotalTo21 = 21 - cardsTotal
             printAsTitle("Vez de \(name)")
+            printEffectCards(onHand: true)
+            print(attackGambleOnHand)
+            print(temporaryArmorOnHand)
+            print(cardsTotalToOponentCardsTotal)
+            print(cardsTotalTo21)
             if (cardsTotal >= 17) {
+                if cardsTotalToOponentCardsTotal < 0 {
+                    if cardsTotalTo21 <= 3 {
+                        while attributes.chips > attackGamble.cost && attackGambleOnHand > 0 {
+                            guard let attackGamble = effectCardsHand.first(where: { effectCard in effectCard.text.getText(withEffectDescription: false) == "Aposta de Ataque" }) else {
+                                break
+                            }
+                            attackGamble.use(from: self)
+                            attackGambleOnHand -= 1
+                        }
+                    }
+                    else if cardsTotalToOponentCardsTotal <= -4 {
+                        while attributes.chips > attackGamble.cost && attackGambleOnHand > 0 {
+                            guard let attackGamble = effectCardsHand.first(where: { effectCard in effectCard.text.getText(withEffectDescription: false) == "Aposta de Ataque" }) else {
+                                break
+                            }
+                            attackGamble.use(from: self)
+                            attackGambleOnHand -= 1
+                            break
+                        }
+                    }
+                } else if cardsTotalToOponentCardsTotal > 0 {
+                    if oponentCardsTotal == 21 {
+                        while attributes.chips > temporaryArmor.cost && temporaryArmorOnHand > 0 {
+                            guard let temporaryArmor = effectCardsHand.first(where: { effectCard in effectCard.text.getText(withEffectDescription: false) == "Armadura Temporária" }) else {
+                                break
+                            }
+                            temporaryArmor.use(from: self)
+                            temporaryArmorOnHand -= 1
+                        }
+                    } else {
+                        while attributes.chips > temporaryArmor.cost && temporaryArmorOnHand > 0 {
+                            guard let temporaryArmor = effectCardsHand.first(where: { effectCard in effectCard.text.getText(withEffectDescription: false) == "Armadura Temporária" }) else {
+                                break
+                            }
+                            temporaryArmor.use(from: self)
+                            temporaryArmorOnHand -= 1
+                            break
+                        }
+                    }
+                }
                 print("\n\(name) parou")
                 printHandAndCardsTotal()
                 stopped = true

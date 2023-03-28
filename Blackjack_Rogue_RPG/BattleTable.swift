@@ -62,6 +62,18 @@ class BattleTable {
         }
     }
     
+    private func giveGamblePrize(to character: Character, from gambles: inout Queue<GamblingEffectCard>, activateGambleEffect: Bool = false) {
+        while true {
+            guard let effectCard = gambles.dequeue() else {
+                break
+            }
+            character.attributes.chips += effectCard.cost
+            if activateGambleEffect {
+                print(effectCard.effect(character))
+            }
+        }
+    }
+    
     private func battleEnded() -> Bool {
         if enemy.attributes.health <= 0 {
             printAsTitle("Fim de Batalha")
@@ -87,18 +99,8 @@ class BattleTable {
             } else if player.cardsTotal < enemy.cardsTotal && enemy.cardsTotal <= 21 || player.cardsTotal > 21 {
                 endRound(winner: enemy, loser: player)
             } else {
-                while true {
-                    guard let effectCard = player.gambleQueue.dequeue() else {
-                        break
-                    }
-                    player.attributes.chips += effectCard.cost
-                }
-                while true {
-                    guard let effectCard = enemy.gambleQueue.dequeue() else {
-                        break
-                    }
-                    enemy.attributes.chips += effectCard.cost
-                }
+                giveGamblePrize(to: player, from: &player.gambleQueue)
+                giveGamblePrize(to: enemy, from: &enemy.gambleQueue)
                 print("\nRodada empatou")
             }
             player.printAttributes()
@@ -109,21 +111,10 @@ class BattleTable {
         return false
     }
     
-    func endRound(winner: Character, loser: Character) {
+    private func endRound(winner: Character, loser: Character) {
         print("\n\(winner.name) ganhou a rodada")
-        while true {
-            guard let effectCard = winner.gambleQueue.dequeue() else {
-                break
-            }
-            winner.attributes.chips += effectCard.cost
-            print(effectCard.effect(winner))
-        }
-        while true {
-            guard let effectCard = loser.gambleQueue.dequeue() else {
-                break
-            }
-            winner.attributes.chips += effectCard.cost
-        }
+        giveGamblePrize(to: winner, from: &winner.gambleQueue, activateGambleEffect: true)
+        giveGamblePrize(to: winner, from: &loser.gambleQueue)
         var damage: Int = winner.attributes.attackDamage + winner.battleAttributes.attackDamage + winner.temporaryAttributes.attackDamage
         if (loser.cardsTotal > 21) {
             damage += Int(Double(loser.cardsTotal - 21) * 1.5)
@@ -133,6 +124,7 @@ class BattleTable {
         if winner.cardsTotal == 21 {
             damage = Int(Double(damage) * winner.attributes.criticalMultiplier)
         }
+        damage -= loser.attributes.armor + loser.battleAttributes.armor + loser.temporaryAttributes.armor
         print("\(loser.name) perde \(damage) pontos de vida")
         loser.attributes.health -= damage
     }
@@ -167,6 +159,8 @@ class BattleTable {
         if character.attributes.chips < 5 {
             character.attributes.chips = 5
         }
+        character.effectCardsDiscardPile += character.effectCardsHand
+        character.effectCardsHand.removeAll()
         while character.effectCardsHand.count < 5 {
             if character.effectCards.isEmpty {
                 character.effectCards = character.effectCardsDiscardPile
@@ -175,7 +169,14 @@ class BattleTable {
             let randomEffectCard = character.effectCards.remove(at: Int.random(in: 0..<character.effectCards.count))
             character.effectCardsHand.append(randomEffectCard)
         }
-        character.makePlay(battleCards: &battleCards)
+        character.temporaryAttributes.reset()
+        var oponentCardsTotal: Int
+        if let _ = character as? Player {
+            oponentCardsTotal = enemy.cardsTotal
+        } else {
+            oponentCardsTotal = player.cardsTotal
+        }
+        character.makePlay(battleCards: &battleCards, oponentCardsTotal: oponentCardsTotal)
         return roundEnded()
     }
     

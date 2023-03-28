@@ -36,7 +36,7 @@ class Player: Character {
         return "Personagem"
     }
 
-    override func makePlay(battleCards cards: inout Array<String>) {
+    override func makePlay(battleCards cards: inout Array<String>, oponentCardsTotal: Int) {
         var endedTurn = false
         if !stopped {
             printAsTitle("Vez de \(name)")
@@ -54,16 +54,24 @@ class Player: Character {
                         print("\nVocê não possui cartas de efeito na mão")
                     } else {
                         var effectCardsHandNames: Array<String> = []
-                        effectCardsHand.forEach{effectCard in effectCardsHandNames.append(effectCard.name)}
+                        effectCardsHand.forEach{effectCard in effectCardsHandNames.append(effectCard.text.getText())}
                         printOptions(effectCardsHandNames)
                         let selectedEffectCardOption = readIntInClosedRange(range: 1...effectCardsHand.count)
-                        let selectedEffectCard = effectCardsHand.remove(at: selectedEffectCardOption - 1)
-                        effectCardsDiscardPile.append(selectedEffectCard)
-                        selectedEffectCard.use(from: self)
+                        let selectedEffectCard = effectCardsHand[selectedEffectCardOption - 1]
+                        if attributes.chips > selectedEffectCard.cost {
+                            let _ = effectCardsHand.remove(at: selectedEffectCardOption - 1)
+                            effectCardsDiscardPile.append(selectedEffectCard)
+                            selectedEffectCard.use(from: self)
+                        } else {
+                            print("\nVocê não possui fichas suficientes")
+                        }
                     }
                     pressEnterToContinue()
                 } else if selectedOption == 3 {
                     stopped = true
+                    if cardsTotal < oponentCardsTotal {
+                        attributes.chips += 5
+                    }
                     endedTurn = true
                 }
             }

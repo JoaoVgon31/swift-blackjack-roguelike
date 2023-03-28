@@ -33,8 +33,9 @@ class GameController {
         
         let enemyEffectCards: Array<EffectCard> = {
             var effectCards: Array<EffectCard> = []
-            for _ in 1...15 {
+            for _ in 1...5 {
                 effectCards.append(attackGamble)
+                effectCards.append(temporaryArmor)
             }
             return effectCards
         }()

@@ -8,19 +8,19 @@
 import Foundation
 
 protocol EffectCard {
-    var name: String { get set }
+    var text: EffectCardText { get set }
     var cost: Int { get set }
     var effect: (Character) -> String { get set }
     func use(from character: Character)
 }
 
 class GamblingEffectCard: EffectCard {
-    var name: String
+    var text: EffectCardText
     var cost: Int
     var effect: (Character) -> String
     
-    init(name: String, cost: Int, effect: @escaping (Character) -> String) {
-        self.name = name
+    init(text: EffectCardText, cost: Int, effect: @escaping (Character) -> String) {
+        self.text = text
         self.cost = cost
         self.effect = effect
     }
@@ -36,22 +36,18 @@ class GamblingEffectCard: EffectCard {
 }
 
 class ConsumableEffectCard: EffectCard {
-    var name: String
+    var text: EffectCardText
     var cost: Int
     var effect: (Character) -> String
     
-    init(name: String, cost: Int, effect: @escaping (Character) -> String) {
-        self.name = name
+    init(text: EffectCardText, cost: Int, effect: @escaping (Character) -> String) {
+        self.text = text
         self.cost = cost
         self.effect = effect
     }
     
     func use(from character: Character) {
-        if character.attributes.chips >= cost {
-            character.attributes.chips -= cost
-            print(effect(character))
-        } else {
-            print("\nVocê não possui fichas suficientes")
-        }
+        character.attributes.chips -= cost
+        print(effect(character))
     }
 }

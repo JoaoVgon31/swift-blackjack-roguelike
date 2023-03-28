@@ -10,6 +10,7 @@ import Foundation
 class Attributes {
     private var _health: Int = 0
     private var _maxHealth: Int = 0
+    private var _armor: Int = 0
     private var _chips: Int = 0
     private var _maxChips: Int = 0
     private var _attackDamage: Int = 0
@@ -27,6 +28,10 @@ class Attributes {
     var maxHealth: Int {
         get { _maxHealth }
         set { _maxHealth = newValue }
+    }
+    var armor: Int {
+        get { _armor }
+        set { _armor = newValue }
     }
     var chips: Int {
         get { _chips }
@@ -54,6 +59,7 @@ class Attributes {
     init() {
         self.health = 0
         self.maxHealth = 0
+        self.armor = 0
         self.chips = 0
         self.maxChips = 0
         self.attackDamage = 0
@@ -63,9 +69,20 @@ class Attributes {
     init(maxHealth: Int, maxChips: Int, attackDamage: Int, criticalMultiplier: Double) {
         self.maxHealth = maxHealth
         self.health = maxHealth
+        self.armor = 0
         self.maxChips = maxChips
         self.chips = maxChips
         self.attackDamage = attackDamage
         self.criticalMultiplier = criticalMultiplier
+    }
+    
+    func reset() {
+        health = 0
+        maxHealth = 0
+        armor = 0
+        chips = 0
+        maxChips = 0
+        attackDamage = 0
+        criticalMultiplier = 0.0
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 
 // Map Size
 let mapPaths = 3
-let mapFloors = 6
+let mapFloors = 12
 
 // Player Attributes
 let playerMaxHealth = 40
@@ -19,12 +19,34 @@ let playerCriticalMultiplier = 2.0
 let playerMoney = 20
 
 // Effect Cards
+enum EffectCardText {
+    case attackGamble(name: String, effectDescription: String)
+    case temporaryArmor(name: String, effectDescription: String)
+    
+    func getText(withEffectDescription: Bool = true) -> String {
+        switch self {
+        case .attackGamble(let name, let effectDescription):
+            return "\(name)" + (withEffectDescription ? ": \(effectDescription)" : "")
+        case .temporaryArmor(let name, let effectDescription):
+            return "\(name)" + (withEffectDescription ? ": \(effectDescription)" : "")
+        }
+    }
+}
+
 var attackGamble = GamblingEffectCard(
-    name: "Aposta de Ataque: +2 de ataque",
+    text: .attackGamble(name: "Aposta de Ataque", effectDescription: "+3 de ataque"),
     cost: 5,
     effect: { (character: Character) -> String in
-        character.temporaryAttributes.attackDamage += 2
-        return "Venceu Aposta de Ataque: +2 de ataque"
+        character.temporaryAttributes.attackDamage += 3
+        return "\(character.name) venceu Aposta de Ataque: +3 de ataque"
+    }
+)
+var temporaryArmor = ConsumableEffectCard(
+    text: .temporaryArmor(name: "Armadura Temporária", effectDescription: "Ganhe 3 de armadura neste turno"),
+    cost: 5,
+    effect: { (character: Character) -> String in
+        character.temporaryAttributes.armor += 3
+        return "\(character.name) usou Armadura Temporária: +3 de armadura"
     }
 )
 
@@ -33,6 +55,7 @@ var playerEffectCards: Array<EffectCard> = {
     var effectCards: Array<EffectCard> = []
     for _ in 1...5 {
         effectCards.append(attackGamble)
+        effectCards.append(temporaryArmor)
     }
     return effectCards
 }()

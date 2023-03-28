@@ -87,9 +87,9 @@ class Character {
     func printEffectCards(onHand: Bool = false) {
         if onHand {
             print("\nCartas de efeito na mão:")
-            effectCardsHand.forEach{effectCard in print("\(effectCard.name). Custo: \(effectCard.cost)k")}
+            effectCardsHand.forEach{effectCard in print("\(effectCard.text.getText()). Custo: \(effectCard.cost)k")}
         } else {
-            print("\nCartas de efeito: \(effectCards.forEach{effectCard in print(effectCard.name)})")
+            print("\nCartas de efeito: \(effectCards.forEach{effectCard in print(effectCard.text.getText())})")
         }
     }
     
@@ -100,10 +100,17 @@ class Character {
         print("\(name) possui \(attributes.criticalMultiplier) multiplicador de dano crítico")
     }
     
+    func countEffectCardsOnHandByName(_ name: String) -> Int {
+        return effectCardsHand.filter{effectCard in effectCard.text.getText(withEffectDescription: false) == name}.count
+    }
+    
     func takeCard(from cards: inout Array<String>) {
         let position = Int.random(in: 0..<cards.count)
         hand.append(cards[position])
         cardsTotal += BattleTable.getCardValue(card: cards[position])
+        if cardsTotal == 21 {
+            stopped = true
+        }
         cards.remove(at: position)
     }
     
@@ -113,5 +120,5 @@ class Character {
         stopped = false
     }
     
-    func makePlay(battleCards cards: inout Array<String>){}
+    func makePlay(battleCards cards: inout Array<String>, oponentCardsTotal: Int){}
 }

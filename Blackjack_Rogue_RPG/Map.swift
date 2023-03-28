@@ -71,7 +71,12 @@ class Map {
     }
     
     private func readNextFloorPath() -> Int {
-        print("\nSelecione um dos caminhos para seguir: 1 | 2 | 3")
+        let currentFloorContent = content[currentFloor]
+        var pathOptions: Array<String> = []
+        for path in 0..<currentFloorContent.count {
+            pathOptions.append(currentFloorContent[path].name)
+        }
+        printOptions(withTitle: "Selecione um dos caminhos para seguir", pathOptions)
         let selectedOption = readIntInClosedRange(range: 1...3)
         lastChoosenPath = selectedOption
         return selectedOption
